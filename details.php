@@ -1,36 +1,45 @@
-<?php
-
-include("inc/data.php");
+<?php 
 include("inc/functions.php");
+//$catalog = full_catalog_array();
 
-if (isset($_GET["id"])){
-   $id =$_GET["id"];
-    if(isset($catalog[$id])){
-        $item = $catalog[$id];
-    }
+if (isset($_GET["id"])) {
+    $id = filter_input(INPUT_GET,"id", FILTER_SANITIZE_NUMBER_INT);
+    $item = single_item_array($id);
 }
-if(!isset($item)){
+
+if (empty($item)) {
     header("location:catalog.php");
     exit;
 }
 
 $pageTitle = $item["title"];
 $section = null;
+
 include("inc/header.php"); ?>
-<div clas="section page">
+
+<div class="section page">
+
     <div class="wrapper">
         
         <div class="breadcrumbs">
-            <a href="catalog.php">Full catalog</a>
-        &gt; <a href=catalog.php?cat=<?php echo $item["category"];?>><?php echo strtolower($item["category"]);?></a> &gt;  <?php echo $item["title"]?>
+            <a href="catalog.php">Full Catalog</a>
+            &gt; <a href="catalog.php?cat=<?php echo strtolower($item["category"]); ?>">
+            <?php echo $item["category"]; ?></a>
+            &gt; <?php echo $item["title"]; ?>
         </div>
+        
         <div class="media-picture">
-        <span><img src="<?php echo $item["img"];?>" alt="<?php echo $item["title"];?>" />
+    
+        <span>
+            <img src="<?php echo $item["img"]; ?>" alt="<?php echo $item["title"]; ?>" />
         </span>
+            
         </div>
+        
         <div class="media-details">
-        <h1><?php echo $item["title"];?></h1>
-      <table>
+        
+            <h1><?php echo $item["title"]; ?></h1>
+            <table>
             
                 <tr>
                     <th>Category</th>
@@ -51,7 +60,7 @@ include("inc/header.php"); ?>
                 <?php if (strtolower($item["category"]) == "books") { ?>
                 <tr>
                     <th>Authors</th>
-                    <td><?php echo implode(", ",$item["authors"]); ?></td>
+                    <td><?php echo implode(", ",$item["author"]); ?></td>
                 </tr>
                 <tr>
                     <th>Publisher</th>
@@ -64,23 +73,26 @@ include("inc/header.php"); ?>
                 <?php } else if (strtolower($item["category"]) == "movies") { ?>
                 <tr>
                     <th>Director</th>
-                    <td><?php echo $item["director"]; ?></td>
+                    <td><?php echo implode(", ",$item["director"]); ?></td>
                 </tr>
                 <tr>
                     <th>Writers</th>
-                    <td><?php echo implode(", ",$item["writers"]); ?></td>
+                    <td><?php echo implode(", ",$item["writer"]); ?></td>
                 </tr>
                 <tr>
                     <th>Stars</th>
-                    <td><?php echo implode(", ",$item["stars"]); ?></td>
+                    <td><?php echo implode(", ",$item["star"]); ?></td>
                 </tr>
                 <?php } else if (strtolower($item["category"]) == "music") { ?>
                 <tr>
                     <th>Artist</th>
-                    <td><?php echo $item["artist"]; ?></td>
+                    <td><?php echo implode(", ",$item["artist"]); ?></td>
                 </tr>
                 <?php } ?>
             </table>
+        
         </div>
+    
     </div>
+
 </div>
