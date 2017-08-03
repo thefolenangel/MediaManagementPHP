@@ -17,9 +17,16 @@
                 <li class="music<?php if ($section == "music") { echo " on"; } ?>"><a href="catalog.php?cat=music">Music</a></li>
                 <li class="suggest<?php if ($section == "suggest") { echo " on"; } ?>"><a href="suggest.php">Suggest</a></li>
             </ul>
-
+        </div>
 		</div>
+<div class="search">
+  <form method="get" action="catalog.php">
+    <label for="s">Search:</label>
+    <input type="text" name="s" id="s" />
+    <input type="submit" value="go" />  
+  </form>
+  </div>
 
-	</div>
+	
 
 	<div id="content">
